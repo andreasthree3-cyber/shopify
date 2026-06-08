@@ -1,0 +1,19 @@
+{
+  "name": "FleckenXperte",
+  "theme_name": "FleckenXperte",
+  "theme_version": "1.0.0",
+  "theme_author": "FleckenXperte",
+  "theme_documentation_url": "https://fleckenxperte.de",
+  "settings": [
+    {
+      "name": "Design",
+      "settings": [
+        { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+        { "type": "color", "id": "color_primary", "label": "Primärfarbe", "default": "#1f2380" },
+        { "type": "color", "id": "color_accent",  "label": "Akzentfarbe", "default": "#4ec8ec" },
+        { "type": "color", "id": "color_bg",      "label": "Hintergrund", "default": "#fafbff" },
+        { "type": "color", "id": "color_fg",      "label": "Textfarbe",   "default": "#1a1330" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<section class="container collection">
+  <h1>Suche</h1>
+  <form action="{{ routes.search_url }}" method="get" class="search-form">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Suchen…" class="search-input">
+    <button type="submit" class="btn btn--brand">Suchen</button>
+  </form>
+
+  {%- if search.performed -%}
+    <p class="search-meta">{{ search.results_count }} Ergebnisse für „{{ search.terms }}"</p>
+    <div class="product-grid">
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}
+          {%- render 'product-card', product: item, variant: item.selected_or_first_available_variant -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+{% schema %}{ "name": "Suche", "settings": [] }{% endschema %}

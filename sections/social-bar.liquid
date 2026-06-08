@@ -1,0 +1,33 @@
+<section class="social-bar">
+  <div class="container">
+    <p class="social-bar__label">{{ section.settings.label }}</p>
+    <div class="social-bar__items">
+      {%- for block in section.blocks -%}
+        <span class="social-bar__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Social Bar",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Wirkt bei den häufigsten Flecken" }
+  ],
+  "blocks": [
+    { "type": "item", "name": "Eintrag", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Kaffee" }] }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "item", "settings": { "text": "Kaffee" } },
+      { "type": "item", "settings": { "text": "Rotwein" } },
+      { "type": "item", "settings": { "text": "Soße" } },
+      { "type": "item", "settings": { "text": "Make-up" } },
+      { "type": "item", "settings": { "text": "Gras" } },
+      { "type": "item", "settings": { "text": "Tinte" } }
+    ]
+  },
+  "presets": [{ "name": "Social Bar" }]
+}
+{% endschema %}

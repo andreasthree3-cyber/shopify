@@ -1,0 +1,34 @@
+<section class="featured-product container" id="produkt">
+  <header class="featured-product__head">
+    <div>
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.title }}</h2>
+    </div>
+    <p class="featured-product__meta">Versand 3,99&nbsp;€ · ab 50&nbsp;€ versandkostenfrei (DE)</p>
+  </header>
+
+  <div class="product-grid">
+    {%- assign product = all_products[section.settings.product] -%}
+    {%- if product != blank and product.handle != blank -%}
+      {%- for variant in product.variants -%}
+        {%- render 'product-card', product: product, variant: variant -%}
+      {%- endfor -%}
+    {%- else -%}
+      <div class="empty-state">
+        <p>Bitte im Theme-Editor ein Produkt auswählen.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Product",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Hol dir deinen FleckenXperte" },
+    { "type": "product", "id": "product", "label": "Produkt" }
+  ],
+  "presets": [{ "name": "Featured Product" }]
+}
+{% endschema %}

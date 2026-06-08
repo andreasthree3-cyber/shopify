@@ -1,0 +1,45 @@
+<section class="benefits container">
+  <header class="benefits__head">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="benefits__title">{{ section.settings.title }} <span class="text-gradient-brand">{{ section.settings.title_accent }}</span></h2>
+  </header>
+  <div class="benefits__grid">
+    {%- for block in section.blocks -%}
+      <article class="benefit-card" {{ block.shopify_attributes }}>
+        <div class="benefit-card__icon">★</div>
+        <h3 class="benefit-card__title">{{ block.settings.title }}</h3>
+        <p class="benefit-card__desc">{{ block.settings.desc }}</p>
+      </article>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Warum FleckenXperte" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Klein im Format." },
+    { "type": "text", "id": "title_accent", "label": "Titel Akzent", "default": "Stark im Alltag." }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titel" },
+        { "type": "textarea", "id": "desc", "label": "Beschreibung" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "benefit", "settings": { "title": "Schnell zur Hand", "desc": "Auftragen, kurz einwirken, mit einem Tuch abnehmen — die ideale Erstbehandlung." } },
+      { "type": "benefit", "settings": { "title": "Passt in jede Tasche", "desc": "Im Stiftformat wie ein Lippenstift. Für Handtasche, Schreibtisch oder Handschuhfach." } },
+      { "type": "benefit", "settings": { "title": "Schonend formuliert", "desc": "Gel auf Tensidbasis – ohne Chlorbleiche. Materialvortest empfohlen." } },
+      { "type": "benefit", "settings": { "title": "Sichere Bezahlung", "desc": "Sichere Bezahlung über Shopify & PayPal." } }
+    ]
+  },
+  "presets": [{ "name": "Benefits" }]
+}
+{% endschema %}

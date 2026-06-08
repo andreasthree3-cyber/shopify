@@ -1,0 +1,53 @@
+<section class="cart container">
+  <h1>Warenkorb</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="cart__empty">
+      <p>Dein Warenkorb ist leer.</p>
+      <a href="{{ routes.root_url }}" class="btn btn--brand">Weiter shoppen</a>
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post" class="cart__form">
+      <table class="cart__table">
+        <thead>
+          <tr><th>Produkt</th><th>Menge</th><th>Preis</th><th></th></tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            <tr>
+              <td class="cart__item">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 120 | image_tag: alt: item.title, class: 'cart__thumb' }}
+                {%- endif -%}
+                <div>
+                  <a href="{{ item.url }}"><strong>{{ item.product.title }}</strong></a>
+                  <div class="cart__variant">{{ item.variant.title }}</div>
+                </div>
+              </td>
+              <td>
+                <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" class="cart__qty">
+              </td>
+              <td>{{ item.final_line_price | money }}</td>
+              <td><a href="{{ item.url_to_remove }}" class="cart__remove">Entfernen</a></td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div class="cart__footer">
+        <div class="cart__totals">
+          <div>Zwischensumme: <strong>{{ cart.total_price | money }}</strong></div>
+          <small>inkl. MwSt. · zzgl. Versand</small>
+        </div>
+        <div class="cart__actions">
+          <button type="submit" name="update" class="btn btn--ghost">Aktualisieren</button>
+          <button type="submit" name="checkout" class="btn btn--brand btn--lg">Zur Kasse</button>
+        </div>
+      </div>
+    </form>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{ "name": "Warenkorb", "settings": [] }
+{% endschema %}

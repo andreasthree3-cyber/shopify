@@ -1,0 +1,54 @@
+<section class="steps" id="anwendung">
+  <div class="container">
+    <header class="steps__head">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.lead }}</p>
+    </header>
+
+    <ol class="steps__list">
+      {%- for block in section.blocks -%}
+        <li class="step" {{ block.shopify_attributes }}>
+          <span class="step__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3 class="step__title">{{ block.settings.title }}</h3>
+          <p class="step__desc">{{ block.settings.desc }}</p>
+        </li>
+      {%- endfor -%}
+    </ol>
+
+    <div class="callout">
+      <strong>Wichtig: Vorher an unauffälliger Stelle testen.</strong>
+      <p>Vor jeder Anwendung an einer verdeckten Stelle auf Farbechtheit testen. Nicht für Leder, Wildleder, Seide oder nicht waschbare Stoffe.</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Steps",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "So einfach geht's" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "In 4 Schritten fleckenfrei" },
+    { "type": "textarea", "id": "lead", "label": "Lead", "default": "So nutzt du deinen FleckenXperte TO GO — direkt am Malheur." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Schritt",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titel" },
+        { "type": "textarea", "id": "desc", "label": "Beschreibung" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "step", "settings": { "title": "Stelle leicht befeuchten", "desc": "Befeuchten Sie die verschmutzte Stelle leicht mit etwas Wasser." } },
+      { "type": "step", "settings": { "title": "Produkt auftragen", "desc": "Kappe abnehmen, Stift herausdrehen, Gel direkt auf den Fleck." } },
+      { "type": "step", "settings": { "title": "Vorsichtig einarbeiten", "desc": "Mit einem Tuch oder den Fingern sanft in den Stoff einreiben." } },
+      { "type": "step", "settings": { "title": "Ausspülen oder abwischen", "desc": "Mit klarem Wasser ausspülen oder feucht nachwischen." } }
+    ]
+  },
+  "presets": [{ "name": "Steps" }]
+}
+{% endschema %}

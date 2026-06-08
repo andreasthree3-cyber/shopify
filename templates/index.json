@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "hero": { "type": "hero", "settings": {} },
+    "social-bar": { "type": "social-bar", "settings": {} },
+    "benefits": { "type": "benefits", "settings": {} },
+    "featured-product": { "type": "featured-product", "settings": {} },
+    "steps": { "type": "steps", "settings": {} },
+    "faq": { "type": "faq", "settings": {} }
+  },
+  "order": ["hero", "social-bar", "benefits", "featured-product", "steps", "faq"]
+}

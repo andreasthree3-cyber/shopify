@@ -1,0 +1,24 @@
+<section class="collection container">
+  <header class="collection__head">
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="rte">{{ collection.description }}</div>
+    {%- endif -%}
+  </header>
+
+  <div class="product-grid">
+    {%- for product in collection.products -%}
+      {%- render 'product-card', product: product, variant: product.selected_or_first_available_variant -%}
+    {%- else -%}
+      <p>Keine Produkte gefunden.</p>
+    {%- endfor -%}
+  </div>
+
+  {%- if paginate.pages > 1 -%}
+    <nav class="pagination">{{ paginate | default_pagination }}</nav>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{ "name": "Kollektion", "settings": [] }
+{% endschema %}

@@ -1,0 +1,68 @@
+<section class="hero bg-hero">
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <span class="chip">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.39 7.36H22l-6.18 4.49L18.21 21 12 16.51 5.79 21l2.39-7.15L2 9.36h7.61z"/></svg>
+        {{ section.settings.eyebrow }}
+      </span>
+      <h1 class="hero__title">
+        {{ section.settings.title_line1 }}<br>
+        <span class="text-gradient-brand">{{ section.settings.title_line2 }}</span>
+      </h1>
+      <p class="hero__lead">{{ section.settings.lead }}</p>
+      <div class="hero__cta">
+        <a href="{{ section.settings.cta_primary_url }}" class="btn btn--brand">{{ section.settings.cta_primary }}</a>
+        <a href="{{ section.settings.cta_secondary_url }}" class="btn btn--ghost">{{ section.settings.cta_secondary }}</a>
+      </div>
+      <ul class="hero__bullets">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'bullet' -%}
+            <li {{ block.shopify_attributes }}>✓ {{ block.settings.text }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <div class="hero__visual">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__spotlight" aria-hidden="true"></div>
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: alt: 'FleckenXperte TO GO', class: 'hero__image', loading: 'eager' }}
+      {%- else -%}
+        <div class="hero__placeholder">{{ 'product-1' | placeholder_svg_tag: 'hero__image' }}</div>
+      {%- endif -%}
+      <div class="hero__badge">
+        <strong>Immer dabei</strong>
+        <span>Schnelle Erstbehandlung</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Fleckenentferner-Stift · für unterwegs" },
+    { "type": "text", "id": "title_line1", "label": "Titel Zeile 1", "default": "Erste Hilfe" },
+    { "type": "text", "id": "title_line2", "label": "Titel Zeile 2 (Gradient)", "default": "bei Flecken." },
+    { "type": "textarea", "id": "lead", "label": "Lead-Text", "default": "Der FleckenXperte TO GO ist dein Fleckenentferner im Stiftformat — so kompakt wie ein Lippenstift und immer griffbereit." },
+    { "type": "text", "id": "cta_primary", "label": "Primärer CTA", "default": "Jetzt sichern" },
+    { "type": "url", "id": "cta_primary_url", "label": "Primärer CTA URL" },
+    { "type": "text", "id": "cta_secondary", "label": "Sekundärer CTA", "default": "So funktioniert's" },
+    { "type": "url", "id": "cta_secondary_url", "label": "Sekundärer CTA URL" },
+    { "type": "image_picker", "id": "image", "label": "Produktbild (Hero)" }
+  ],
+  "blocks": [
+    { "type": "bullet", "name": "Bullet", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Ohne Bleiche" }] }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "bullet", "settings": { "text": "Ohne Bleiche" } },
+      { "type": "bullet", "settings": { "text": "Sanft zur Haut – ohne aggressive Chemie" } },
+      { "type": "bullet", "settings": { "text": "Kompakt: 5 g · passt in jede Tasche" } }
+    ]
+  },
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

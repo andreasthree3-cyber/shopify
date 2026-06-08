@@ -1,0 +1,70 @@
+<section class="pdp container">
+  <div class="pdp__media">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 1200 | image_tag: alt: product.title, class: 'pdp__image' }}
+    {%- endif -%}
+    {%- if product.images.size > 1 -%}
+      <div class="pdp__thumbs">
+        {%- for image in product.images -%}
+          {{ image | image_url: width: 200 | image_tag: alt: image.alt, class: 'pdp__thumb' }}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="pdp__info">
+    <h1 class="pdp__title">{{ product.title }}</h1>
+    <p class="pdp__price">
+      {%- assign current = product.selected_or_first_available_variant -%}
+      <span id="pdp-price">{{ current.price | money }}</span>
+      <small>inkl. MwSt. · <a href="/pages/versandbedingungen">zzgl. Versand</a></small>
+      <small>Lieferzeit innerhalb von 1–3 Arbeitstagen</small>
+    </p>
+
+    <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="pdp__form" id="pdp-form">
+      {%- if product.variants.size > 1 -%}
+        <label class="pdp__label" for="pdp-variant">Variante</label>
+        <select name="id" id="pdp-variant" class="pdp__select" data-prices='{
+          {%- for v in product.variants -%}"{{ v.id }}":"{{ v.price | money }}"{% unless forloop.last %},{% endunless %}{%- endfor -%}
+        }'>
+          {%- for v in product.variants -%}
+            <option value="{{ v.id }}" {% if v.id == current.id %}selected{% endif %} {% unless v.available %}disabled{% endunless %}>
+              {{ v.title }} — {{ v.price | money }}
+            </option>
+          {%- endfor -%}
+        </select>
+      {%- else -%}
+        <input type="hidden" name="id" value="{{ current.id }}">
+      {%- endif -%}
+
+      <div class="pdp__qty">
+        <label for="pdp-qty">Menge</label>
+        <input type="number" id="pdp-qty" name="quantity" value="1" min="1">
+      </div>
+
+      <button type="submit" class="btn btn--brand btn--lg" {% unless current.available %}disabled{% endunless %}>
+        {% if current.available %}In den Warenkorb{% else %}Ausverkauft{% endif %}
+      </button>
+    </form>
+
+    <div class="pdp__desc rte">
+      {{ product.description }}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function(){
+    var sel = document.getElementById('pdp-variant');
+    if(!sel) return;
+    sel.addEventListener('change', function(){
+      var prices = JSON.parse(sel.dataset.prices);
+      var el = document.getElementById('pdp-price');
+      if(el && prices[sel.value]) el.textContent = prices[sel.value];
+    });
+  })();
+</script>
+
+{% schema %}
+{ "name": "Produkt", "settings": [] }
+{% endschema %}
