@@ -1,40 +1,46 @@
-<section class="faq container" id="faq">
-  <h2 class="faq__title">{{ section.settings.title }}</h2>
-  <div class="faq__list">
-    {%- for block in section.blocks -%}
-      <details class="faq__item" {{ block.shopify_attributes }}>
-        <summary>{{ block.settings.q }}<span aria-hidden="true">+</span></summary>
-        <div class="faq__answer">{{ block.settings.a }}</div>
-      </details>
-    {%- endfor -%}
+<div class="faq-section page-width" id="faq">
+  <h2 class="faq-title">Häufige Fragen</h2>
+  <div class="faq-accordion-container">
+    <details class="faq-item" open>
+      <summary class="faq-question">
+        <span>Auf welchen Stoffen kann ich den FleckenXperte verwenden?</span>
+        <span class="icon-toggle">+</span>
+      </summary>
+      <div class="faq-answer">
+        <p>Geeignet für waschbare, farbechte Textilien. Materialvortest an verdeckter Stelle empfohlen. Nicht geeignet für Leder, Wildleder, Seide oder nicht waschbare Stoffe.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">
+        <span>Wie ergiebig ist ein Stift?</span>
+        <span class="icon-toggle">+</span>
+      </summary>
+      <div class="faq-answer">
+        <p>Ein kompakter 5g Stift ist sehr ergiebig und reicht für die schnelle Erstbehandlung zahlreicher frischer Flecken von Kaffee, Rotwein, Soße und mehr unterwegs.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">
+        <span>Funktioniert er auch bei alten Flecken?</span>
+        <span class="icon-toggle">+</span>
+      </summary>
+      <div class="faq-answer">
+        <p>Der FleckenXperte TO GO ist als Erste-Hilfe-Stift zur sofortigen Erstbehandlung konzipiert. Bei älteren, eingetrockneten Flecken kann die Wirkung je nach Gewebe variieren.</p>
+      </div>
+    </details>
   </div>
-</section>
+</div>
 
 {% schema %}
 {
-  "name": "FAQ",
-  "settings": [
-    { "type": "text", "id": "title", "label": "Titel", "default": "Häufige Fragen" }
-  ],
-  "blocks": [
+  "name": "FAQ Accordion",
+  "settings": [],
+  "presets": [
     {
-      "type": "qa",
-      "name": "Frage",
-      "settings": [
-        { "type": "text", "id": "q", "label": "Frage" },
-        { "type": "richtext", "id": "a", "label": "Antwort" }
-      ]
+      "name": "FAQ Accordion"
     }
-  ],
-  "default": {
-    "blocks": [
-      { "type": "qa", "settings": { "q": "Auf welchen Stoffen kann ich den FleckenXperte verwenden?", "a": "<p>Für die meisten waschbaren Stoffe geeignet. Nicht für Leder, Wildleder, Seide oder empfindliche Materialien. Vorher an verdeckter Stelle testen.</p>" } },
-      { "type": "qa", "settings": { "q": "Wie ergiebig ist ein Stift?", "a": "<p>5 g Inhalt – reicht für viele kleine Erstbehandlungen unterwegs und für regelmäßig genutzte Handtaschen, Schreibtische und Auto-Setups.</p>" } },
-      { "type": "qa", "settings": { "q": "Funktioniert er auch bei alten Flecken?", "a": "<p>Bei frischen Flecken ist die Wirkung am besten. Bei alten oder hartnäckigen Flecken kann ein zweiter Einsatz sinnvoll sein.</p>" } },
-      { "type": "qa", "settings": { "q": "Darf ich den Stift im Handgepäck mitnehmen?", "a": "<p>Ja, grundsätzlich ist der Stift für den Alltag unterwegs gedacht. Bitte die geltenden Flugregeln und Sicherheitsvorgaben beachten.</p>" } },
-      { "type": "qa", "settings": { "q": "Ist der Stift auslaufsicher?", "a": "<p>Ja, der Stift ist so gestaltet, dass er im Alltag sicher transportiert werden kann. Bei extremer Hitze oder Druck sollte er nicht unbeaufsichtigt gelassen werden.</p>" } }
-    ]
-  },
-  "presets": [{ "name": "FAQ" }]
+  ]
 }
 {% endschema %}
