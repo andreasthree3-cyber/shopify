@@ -2,6 +2,23 @@
 (function () {
   'use strict';
 
+  var menuToggle = document.querySelector('.site-header__menu-toggle');
+  var drawer = document.querySelector('.site-header__drawer');
+
+  if (menuToggle && drawer) {
+    menuToggle.addEventListener('click', function () {
+      var isOpen = drawer.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!drawer.contains(event.target) && !menuToggle.contains(event.target)) {
+        drawer.classList.remove('is-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   // Update header cart count after add-to-cart form submits via fetch (progressive enhancement)
   document.addEventListener('submit', function (e) {
     var form = e.target;

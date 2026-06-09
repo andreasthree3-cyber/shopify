@@ -1,26 +1,25 @@
-<section class="hero bg-hero">
+<section class="hero bg-hero" id="startseite">
   <div class="container hero__inner">
     <div class="hero__copy">
       <span class="chip">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.39 7.36H22l-6.18 4.49L18.21 21 12 16.51 5.79 21l2.39-7.15L2 9.36h7.61z"/></svg>
         {{ section.settings.eyebrow }}
       </span>
-      <h1 class="hero__title">
-        {{ section.settings.title_line1 }}<br>
-        <span class="text-gradient-brand">{{ section.settings.title_line2 }}</span>
-      </h1>
-      <p class="hero__lead">{{ section.settings.lead }}</p>
-      <div class="hero__cta">
-        <a href="{{ section.settings.cta_primary_url }}" class="btn btn--brand">{{ section.settings.cta_primary }}</a>
-        <a href="{{ section.settings.cta_secondary_url }}" class="btn btn--ghost">{{ section.settings.cta_secondary }}</a>
-      </div>
+      <h1 class="hero__title">Fleckenentferner-Stift für unterwegs &amp; auf Reisen</h1>
+      <p class="hero__lead">Schnelle Hilfe bei Flecken – unterwegs und auf Reisen. Ideal für Restaurant, Büro, Hochzeit oder spontane Abenteuer.</p>
       <ul class="hero__bullets">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'bullet' -%}
-            <li {{ block.shopify_attributes }}>✓ {{ block.settings.text }}</li>
-          {%- endif -%}
-        {%- endfor -%}
+        <li>Rotwein beim Geschäftsessen? Kaffee auf der Bluse vor dem Meeting?</li>
+        <li>Ein kleiner Stift, der auch unterwegs sofort wirkt.</li>
       </ul>
+      <div class="hero__cta">
+        <a href="{{ section.settings.cta_primary_url }}" class="btn btn--brand">Jetzt bestellen</a>
+        <a href="#produkt" class="btn btn--ghost">Produkt ansehen</a>
+      </div>
+      <div class="hero__micro-ribbon">
+        <span class="hero__micro-chip"><strong>Immer dabei</strong></span>
+        <span class="hero__micro-chip">Schnelle Erstbehandlung</span>
+        <span class="hero__micro-chip">Ohne Chlorbleiche</span>
+      </div>
     </div>
 
     <div class="hero__visual">
@@ -29,7 +28,7 @@
       {%- if section.settings.image != blank -%}
         {{ section.settings.image | image_url: width: 1200 | image_tag: alt: 'FleckenXperte TO GO', class: 'hero__image', loading: 'eager' }}
       {%- else -%}
-        <div class="hero__placeholder">{{ 'product-1' | placeholder_svg_tag: 'hero__image' }}</div>
+        <img class="hero__image" src="{{ 'hero-stick.png' | asset_url }}" alt="FleckenXperte Stift" loading="eager">
       {%- endif -%}
       <div class="hero__badge">
         <strong>Immer dabei</strong>

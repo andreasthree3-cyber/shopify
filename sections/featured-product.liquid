@@ -7,18 +7,46 @@
     <p class="featured-product__meta">Versand 3,99&nbsp;€ · ab 50&nbsp;€ versandkostenfrei (DE)</p>
   </header>
 
-  <div class="product-grid">
-    {%- assign product = all_products[section.settings.product] -%}
-    {%- if product != blank and product.handle != blank -%}
-      {%- for variant in product.variants -%}
-        {%- render 'product-card', product: product, variant: variant -%}
-      {%- endfor -%}
-    {%- else -%}
-      <div class="empty-state">
-        <p>Bitte im Theme-Editor ein Produkt auswählen.</p>
-      </div>
-    {%- endif -%}
-  </div>
+  {%- assign product = all_products[section.settings.product] -%}
+  {%- if product != blank and product.handle != blank -%}
+    <div class="featured-product__frame">
+      <article class="featured-product__gallery">
+        {%- if product.featured_image != blank -%}
+          {{ product.featured_image | image_url: width: 1200 | image_tag: alt: product.title, loading: 'lazy' }}
+        {%- else -%}
+          <img src="{{ 'hero-stick.png' | asset_url }}" alt="{{ product.title }}" loading="lazy">
+        {%- endif -%}
+      </article>
+
+      <article class="featured-product__details">
+        <span class="featured-product__badge">Beliebt: das 6er-Pack</span>
+        <h3 style="margin:0; font-size:clamp(1.4rem, 2vw, 1.9rem);">{{ product.title }}</h3>
+        <p style="margin:0; color:var(--color-muted-fg);">Leicht, schnell und immer griffbereit – perfekt für Restaurant, Büro, Reise oder Hochzeit.</p>
+
+        <div class="featured-product__variant-list">
+          {%- for variant in product.variants limit: 3 -%}
+            <article class="featured-product__variant-card">
+              <div>
+                <strong>{{ variant.title }}</strong>
+                <span>{{ variant.price | money }} · inkl. MwSt.</span>
+              </div>
+              <a class="btn btn--brand" href="{{ product.url }}">Wählen</a>
+            </article>
+          {%- endfor -%}
+        </div>
+
+        <div class="featured-product__cta-row">
+          <a class="btn btn--brand" href="{{ product.url }}">Jetzt bestellen</a>
+          <a class="btn btn--ghost" href="#faq">FAQ öffnen</a>
+        </div>
+        <p class="featured-product__trust">Versand 3,99 € | ab 50 € versandkostenfrei (DE)</p>
+      </article>
+    </div>
+  {%- else -%}
+    <div class="empty-state">
+      <p>Bitte im Theme-Editor ein Produkt auswählen.</p>
+    </div>
+  {%- endif -%}
 </section>
 
 {% schema %}

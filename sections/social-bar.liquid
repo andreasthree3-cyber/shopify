@@ -3,7 +3,7 @@
     <p class="social-bar__label">{{ section.settings.label }}</p>
     <div class="social-bar__items">
       {%- for block in section.blocks -%}
-        <span class="social-bar__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+        <span class="social-bar__tag" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
       {%- endfor -%}
     </div>
   </div>
@@ -20,12 +20,12 @@
   ],
   "default": {
     "blocks": [
-      { "type": "item", "settings": { "text": "Kaffee" } },
-      { "type": "item", "settings": { "text": "Rotwein" } },
-      { "type": "item", "settings": { "text": "Soße" } },
-      { "type": "item", "settings": { "text": "Make-up" } },
-      { "type": "item", "settings": { "text": "Gras" } },
-      { "type": "item", "settings": { "text": "Tinte" } }
+      { "type": "item", "settings": { "text": "Restaurant" } },
+      { "type": "item", "settings": { "text": "Reise" } },
+      { "type": "item", "settings": { "text": "Hochzeit" } },
+      { "type": "item", "settings": { "text": "Büro" } },
+      { "type": "item", "settings": { "text": "Auto" } },
+      { "type": "item", "settings": { "text": "Urlaub" } }
     ]
   },
   "presets": [{ "name": "Social Bar" }]
