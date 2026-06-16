@@ -1,16 +1,92 @@
 <section class="benefits container" id="vorteile">
   <header class="benefits__head">
-    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-    <h2 class="benefits__title">{{ section.settings.title }} <span class="text-gradient-brand">{{ section.settings.title_accent }}</span></h2>
+    <span class="eyebrow">{{ section.settings.eyebrow | default: 'Warum FleckenXperte' }}</span>
+    <h2 class="benefits__title">
+      {{ section.settings.title | default: 'Klein im Format.' }}
+      <span class="text-gradient-brand">{{ section.settings.title_accent | default: 'Stark im Alltag.' }}</span>
+    </h2>
   </header>
+  
   <div class="benefits__grid">
-    {%- for block in section.blocks -%}
-      <article class="benefit-card" {{ block.shopify_attributes }}>
-        <div class="benefit-card__icon">★</div>
-        <h3 class="benefit-card__title">{{ block.settings.title }}</h3>
-        <p class="benefit-card__desc">{{ block.settings.desc }}</p>
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <article class="benefit-card" {{ block.shopify_attributes }}>
+          <div class="benefit-card__icon">
+            {%- case block.settings.icon -%}
+              {%- when 'lightning' -%}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              {%- when 'box' -%}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </svg>
+              {%- when 'leaf' -%}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 0 9.5a7 7 0 0 1-8 8.5z"/>
+                  <path d="M19 2c-2.26 4.33-5.27 7.14-8 10"/>
+                </svg>
+              {%- when 'shield' -%}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 11 2 2 4-4"/>
+                </svg>
+              {%- else -%}
+                <span>✦</span>
+            {%- endcase -%}
+          </div>
+          <h3 class="benefit-card__title">{{ block.settings.title }}</h3>
+          <p class="benefit-card__desc">{{ block.settings.desc }}</p>
+        </article>
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Default Fallbacks matching reference site -->
+      <article class="benefit-card">
+        <div class="benefit-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <h3 class="benefit-card__title">Schnell zur Hand</h3>
+        <p class="benefit-card__desc">Auftragen, kurz einwirken, mit einem Tuch abnehmen — die ideale Erstbehandlung direkt nach dem Malheur.</p>
       </article>
-    {%- endfor -%}
+
+      <article class="benefit-card">
+        <div class="benefit-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+        </div>
+        <h3 class="benefit-card__title">Passt in jede Tasche</h3>
+        <p class="benefit-card__desc">Im Stiftformat wie ein Lippenstift. Für Handtasche, Schreibtisch oder Handschuhfach.</p>
+      </article>
+
+      <article class="benefit-card">
+        <div class="benefit-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 0 9.5a7 7 0 0 1-8 8.5z"/>
+            <path d="M19 2c-2.26 4.33-5.27 7.14-8 10"/>
+          </svg>
+        </div>
+        <h3 class="benefit-card__title">Sanft zum Gewebe</h3>
+        <p class="benefit-card__desc">Gel auf Tensidbasis – ohne Chlorbleiche. Materialvortest an verdeckter Stelle empfohlen.</p>
+      </article>
+
+      <article class="benefit-card">
+        <div class="benefit-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 11 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3 class="benefit-card__title">Sichere Bezahlung</h3>
+        <p class="benefit-card__desc">Sichere Bezahlung über Shopify & PayPal.</p>
+      </article>
+    {%- endif -%}
   </div>
 </section>
 
@@ -28,7 +104,19 @@
       "name": "Benefit",
       "settings": [
         { "type": "text", "id": "title", "label": "Titel" },
-        { "type": "textarea", "id": "desc", "label": "Beschreibung" }
+        { "type": "textarea", "id": "desc", "label": "Beschreibung" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "lightning", "label": "Blitz" },
+            { "value": "box", "label": "Paket/Box" },
+            { "value": "leaf", "label": "Blatt" },
+            { "value": "shield", "label": "Sicherheits-Schild" }
+          ],
+          "default": "lightning"
+        }
       ]
     }
   ],

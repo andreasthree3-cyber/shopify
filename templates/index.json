@@ -5,7 +5,8 @@
     "benefits": { "type": "benefits", "settings": {} },
     "featured-product": { "type": "featured-product", "settings": {} },
     "steps": { "type": "steps", "settings": {} },
-    "faq": { "type": "faq", "settings": {} }
+    "faq": { "type": "faq", "settings": {} },
+    "use-cases": { "type": "use-cases", "settings": {} }
   },
-  "order": ["hero", "social-bar", "benefits", "featured-product", "steps", "faq"]
+  "order": ["hero", "social-bar", "benefits", "featured-product", "steps", "faq", "use-cases"]
 }

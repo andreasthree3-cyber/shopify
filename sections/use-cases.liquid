@@ -1,0 +1,131 @@
+<section class="use-cases container" id="anwendungsbereiche">
+  <header class="use-cases__head">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="use-cases__title">{{ section.settings.title }}</h2>
+  </header>
+  
+  <div class="use-cases__grid">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <article class="use-case-card" {{ block.shopify_attributes }}>
+          <h3 class="use-case-card__title">{{ block.settings.title }}</h3>
+          <p class="use-case-card__desc">{{ block.settings.desc }}</p>
+        </article>
+      {%- endfor -%}
+    {%- else -%}
+      <article class="use-case-card">
+        <h3 class="use-case-card__title">Fleckenentferner für Rotwein</h3>
+        <p class="use-case-card__desc">Ein umgekipptes Glas Rotwein beim Abendessen ist klassisch — und ärgerlich. Der FleckenXperte TO GO ist als Erste-Hilfe-Stift gedacht, um frische Rotweinflecken auf waschbaren Stoffen unterwegs vorbehandeln, bis das Kleidungsstück gewaschen werden kann.</p>
+      </article>
+      <article class="use-case-card">
+        <h3 class="use-case-card__title">Fleckenentferner für Kaffee</h3>
+        <p class="use-case-card__desc">Kaffeeflecken auf Bluse, Hemd oder Hose entstehen meist genau dann, wenn man keine Zeit hat. Mit dem Stift im Lippenstiftformat behandelst du Kaffeespritzer direkt am Schreibtisch oder im Café — ohne erst nach Hause zu müssen.</p>
+      </article>
+      <article class="use-case-card">
+        <h3 class="use-case-card__title">Fleckenentferner für Reisen & Urlaub</h3>
+        <p class="use-case-card__desc">Im Koffer nimmt der Stift mit 5 g praktisch keinen Platz weg und liegt deutlich unter den üblichen 100-ml-Flüssigkeitsgrenzen im Handgepäck. So bist du im Flugzeug, Hotel, am Strand oder beim Sightseeing für kleine Malheurs vorbereitet.</p>
+      </article>
+      <article class="use-case-card">
+        <h3 class="use-case-card__title">Fleckenentferner für unterwegs</h3>
+        <p class="use-case-card__desc">Restaurant, Auto, Schule, Büro oder Spielplatz — Flecken passieren überall, nur eben selten zuhause. Der kompakte Fleckenstift passt in jede Tasche und ermöglicht eine schnelle Erstbehandlung direkt am Ort des Geschehens.</p>
+      </article>
+      <article class="use-case-card">
+        <h3 class="use-case-card__title">Fleckenstift für die Handtasche</h3>
+        <p class="use-case-card__desc">Klein, leicht, mit fester Kappe: Der FleckenXperte TO GO ist als ständiger Begleiter in der Handtasche konzipiert. Ein Griff genügt, um eine kleine Menge Gel direkt auf einen frischen Fleck aufzutragen.</p>
+      </article>
+      <article class="use-case-card">
+        <h3 class="use-case-card__title">Fleckenentferner für Geschäftsreisen</h3>
+        <p class="use-case-card__desc">Vor dem Kundentermin Kaffee auf dem Hemd? Für Vielreisende und Pendler ist der Stift eine pragmatische Backup-Lösung im Aktenkoffer oder Laptop-Rucksack — falls vor dem Meeting keine Zeit für eine Reinigung bleibt.</p>
+      </article>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Anwendungsbereiche",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "ANWENDUNGSBEREICHE"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titel",
+      "default": "Wann der FleckenXperte TO GO hilft"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "case",
+      "name": "Anwendungsfall",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titel",
+          "default": "Fleckenentferner für Rotwein"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Beschreibung",
+          "default": "Ein umgekipptes Glas Rotwein beim Abendessen ist klassisch — und ärgerlich. Der FleckenXperte TO GO ist als Erste-Hilfe-Stift gedacht, um frische Rotweinflecken auf waschbaren Stoffen unterwegs vorbehandeln, bis das Kleidungsstück gewaschen werden kann."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Anwendungsbereiche",
+      "blocks": [
+        {
+          "type": "case",
+          "settings": {
+            "title": "Fleckenentferner für Rotwein",
+            "desc": "Ein umgekipptes Glas Rotwein beim Abendessen ist klassisch — und ärgerlich. Der FleckenXperte TO GO ist als Erste-Hilfe-Stift gedacht, um frische Rotweinflecken auf waschbaren Stoffen unterwegs vorbehandeln, bis das Kleidungsstück gewaschen werden kann."
+          }
+        },
+        {
+          "type": "case",
+          "settings": {
+            "title": "Fleckenentferner für Kaffee",
+            "desc": "Kaffeeflecken auf Bluse, Hemd oder Hose entstehen meist genau dann, wenn man keine Zeit hat. Mit dem Stift im Lippenstiftformat behandelst du Kaffeespritzer direkt am Schreibtisch oder im Café — ohne erst nach Hause zu müssen."
+          }
+        },
+        {
+          "type": "case",
+          "settings": {
+            "title": "Fleckenentferner für Reisen & Urlaub",
+            "desc": "Im Koffer nimmt der Stift mit 5 g praktisch keinen Platz weg und liegt deutlich unter den üblichen 100-ml-Flüssigkeitsgrenzen im Handgepäck. So bist du im Flugzeug, Hotel, am Strand oder beim Sightseeing für kleine Malheurs vorbereitet."
+          }
+        },
+        {
+          "type": "case",
+          "settings": {
+            "title": "Fleckenentferner für unterwegs",
+            "desc": "Restaurant, Auto, Schule, Büro oder Spielplatz — Flecken passieren überall, nur eben selten zuhause. Der kompakte Fleckenstift passt in jede Tasche und ermöglicht eine schnelle Erstbehandlung direkt am Ort des Geschehens."
+          }
+        },
+        {
+          "type": "case",
+          "settings": {
+            "title": "Fleckenstift für die Handtasche",
+            "desc": "Klein, leicht, mit fester Kappe: Der FleckenXperte TO GO ist als ständiger Begleiter in der Handtasche konzipiert. Ein Griff genügt, um eine kleine Menge Gel direkt auf einen frischen Fleck aufzutragen."
+          }
+        },
+        {
+          "type": "case",
+          "settings": {
+            "title": "Fleckenentferner für Geschäftsreisen",
+            "desc": "Vor dem Kundentermin Kaffee auf dem Hemd? Für Vielreisende und Pendler ist der Stift eine pragmatische Backup-Lösung im Aktenkoffer oder Laptop-Rucksack — falls vor dem Meeting keine Zeit für eine Reinigung bleibt."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

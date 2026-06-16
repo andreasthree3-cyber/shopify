@@ -1,42 +1,116 @@
-<div class="faq-section page-width" id="faq">
-  <h2 class="faq-title">Häufige Fragen</h2>
-  <div class="faq-accordion-container">
-    <details class="faq-item" open>
-      <summary class="faq-question">
-        <span>Auf welchen Stoffen kann ich den FleckenXperte verwenden?</span>
-        <span class="icon-toggle">+</span>
-      </summary>
-      <div class="faq-answer">
-        <p>Geeignet für waschbare, farbechte Textilien. Materialvortest an verdeckter Stelle empfohlen. Nicht geeignet für Leder, Wildleder, Seide oder nicht waschbare Stoffe.</p>
-      </div>
-    </details>
+<section class="faq container" id="faq">
+  <h2 class="faq__title">{{ section.settings.title | default: 'Häufige Fragen' }}</h2>
+  <div class="faq__list">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <details class="faq__item" {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question }}<span>+</span></summary>
+          <div class="faq__answer"><p>{{ block.settings.answer }}</p></div>
+        </details>
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Fallback defaults from the reference website -->
+      <details class="faq__item" open>
+        <summary>Auf welchen Stoffen kann ich den FleckenXperte verwenden?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Grundsätzlich für die meisten waschbaren Stoffe wie Baumwolle, Polyester und Mischgewebe geeignet. Nicht geeignet für Leder, Wildleder, Seide oder nicht waschbare bzw. empfindliche Materialien. Vor jeder Anwendung an einer verdeckten, unauffälligen Stelle (z. B. Innennaht) auf Farbechtheit und Materialverträglichkeit testen.</p>
+        </div>
+      </details>
+      
+      <details class="faq__item">
+        <summary>Wie ergiebig ist ein Stift?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Ein Stift enthält 5 g Produkt und reicht – je nach Fleckengröße und Anwendungsmenge – für viele kleine Erstbehandlungen unterwegs. Der tatsächliche Verbrauch hängt vom individuellen Gebrauch ab.</p>
+        </div>
+      </details>
 
-    <details class="faq-item">
-      <summary class="faq-question">
-        <span>Wie ergiebig ist ein Stift?</span>
-        <span class="icon-toggle">+</span>
-      </summary>
-      <div class="faq-answer">
-        <p>Ein kompakter 5g Stift ist sehr ergiebig und reicht für die schnelle Erstbehandlung zahlreicher frischer Flecken von Kaffee, Rotwein, Soße und mehr unterwegs.</p>
-      </div>
-    </details>
+      <details class="faq__item">
+        <summary>Funktioniert er auch bei alten Flecken?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Die besten Ergebnisse erzielen Sie bei frischen Flecken, möglichst direkt nach dem Malheur. Bei eingetrockneten oder hartnäckigen Flecken kann das Ergebnis abweichen; eine vollständige Entfernung kann nicht in jedem Fall garantiert werden.</p>
+        </div>
+      </details>
 
-    <details class="faq-item">
-      <summary class="faq-question">
-        <span>Funktioniert er auch bei alten Flecken?</span>
-        <span class="icon-toggle">+</span>
-      </summary>
-      <div class="faq-answer">
-        <p>Der FleckenXperte TO GO ist als Erste-Hilfe-Stift zur sofortigen Erstbehandlung konzipiert. Bei älteren, eingetrockneten Flecken kann die Wirkung je nach Gewebe variieren.</p>
-      </div>
-    </details>
+      <details class="faq__item">
+        <summary>Darf ich den Stift im Handgepäck mitnehmen?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Mit nur 5 g Inhalt liegt der Stift deutlich unter der 100-ml-Grenze für Flüssigkeiten im Handgepäck. Bitte beachten Sie dennoch die aktuellen Bestimmungen Ihrer Fluggesellschaft und des jeweiligen Flughafens, da diese variieren können.</p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Ist der Stift auslaufsicher?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Der Stift verfügt über einen Drehmechanismus und eine fest schließende Kappe, sodass er im aufrechten Zustand für die Tasche oder das Reisegepäck geeignet ist. Bewahren Sie ihn idealerweise mit der Kappe nach oben auf.</p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Hinterlässt das Gel Rückstände?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Nach dem Ausspülen mit klarem Wasser bzw. nach einem normalen Waschgang sind in der Regel keine Rückstände sichtbar. Bei empfindlichen Stoffen empfehlen wir, die behandelte Stelle anschließend nachzuspülen oder mit dem Kleidungsstück zu waschen.</p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Kann ich ihn bei Kinderkleidung verwenden?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Ja, der Stift ist grundsätzlich auch für Kinderkleidung aus waschbaren Stoffen geeignet. Führen Sie wie immer einen Materialvortest an verdeckter Stelle durch und waschen Sie das Kleidungsstück nach der Behandlung gemäß Pflegeetikett. Außerhalb der Reichweite von Kindern aufbewahren.</p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Wie lange ist das Produkt haltbar?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Die Haltbarkeitsangabe finden Sie auf der Produktverpackung. Bewahren Sie den Stift kühl, trocken und vor direkter Sonneneinstrahlung geschützt auf, damit die Wirkung möglichst lange erhalten bleibt.</p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Ist der FleckenXperte ein Ersatz für die Waschmaschine?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Nein. Der FleckenXperte TO GO ist als Erste-Hilfe-Stift für die schnelle Behandlung unterwegs konzipiert. Für eine vollständige Reinigung empfehlen wir das anschließende Waschen gemäß Pflegeetikett.</p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Wie hoch sind die Versandkosten?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Innerhalb Deutschlands betragen die Versandkosten 3,99 €. Ab einem Bestellwert von 50 € liefern wir versandkostenfrei.</p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Gibt es ein Sicherheitsdatenblatt?<span>+</span></summary>
+        <div class="faq__answer">
+          <p>Ja. Das aktuelle Sicherheitsdatenblatt (SDS) finden Sie auf der Produktseite als PDF zum Download.</p>
+        </div>
+      </details>
+    {%- endif -%}
   </div>
-</div>
+</section>
 
 {% schema %}
 {
   "name": "FAQ Accordion",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titel",
+      "default": "Häufige Fragen"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Frage & Antwort",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Frage" },
+        { "type": "textarea", "id": "answer", "label": "Antwort" }
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "FAQ Accordion"

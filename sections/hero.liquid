@@ -1,40 +1,126 @@
 <section class="hero bg-hero" id="startseite">
   <div class="container hero__inner">
-    <div class="hero__copy">
-      <span class="chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.39 7.36H22l-6.18 4.49L18.21 21 12 16.51 5.79 21l2.39-7.15L2 9.36h7.61z"/></svg>
-        {{ section.settings.eyebrow }}
-      </span>
-      <h1 class="hero__title">Fleckenentferner-Stift für unterwegs &amp; auf Reisen</h1>
-      <p class="hero__lead">Schnelle Hilfe bei Flecken – unterwegs und auf Reisen. Ideal für Restaurant, Büro, Hochzeit oder spontane Abenteuer.</p>
-      <ul class="hero__bullets">
-        <li>Rotwein beim Geschäftsessen? Kaffee auf der Bluse vor dem Meeting?</li>
-        <li>Ein kleiner Stift, der auch unterwegs sofort wirkt.</li>
-      </ul>
+    <article class="hero__copy">
+      <div class="hero__eyebrow-container">
+        <span class="chip hero__eyebrow-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          {{ section.settings.eyebrow | default: 'Fleckenentferner-Stift · für unterwegs & auf Reisen' }}
+        </span>
+      </div>
+      
+      <h1 class="hero__title">
+        {{ section.settings.title_line1 | default: 'Schnelle Hilfe bei Flecken –' }}
+        <span class="text-gradient-brand">{{ section.settings.title_line2 | default: 'unterwegs und auf Reisen.' }}</span>
+      </h1>
+      
+      <p class="hero__lead">{{ section.settings.lead | default: 'Rotwein beim Geschäftsessen? Kaffee auf der Bluse vor dem Meeting? Mit dem FleckenXperte TO GO hast du schnelle Hilfe immer dabei — so kompakt wie ein Lippenstift, ideal für Handtasche, Auto oder Reisegepäck.' }}</p>
+      
       <div class="hero__cta">
-        <a href="{{ section.settings.cta_primary_url }}" class="btn btn--brand">Jetzt bestellen</a>
-        <a href="#produkt" class="btn btn--ghost">Produkt ansehen</a>
+        <a href="{{ section.settings.cta_primary_url | default: '#produkt' }}" class="btn btn--brand btn--lg">
+          {{ section.settings.cta_primary | default: 'Jetzt bestellen' }}
+        </a>
+        <a href="{{ section.settings.cta_secondary_url | default: '#anwendung' }}" class="btn btn--ghost btn--lg">
+          {{ section.settings.cta_secondary | default: "So funktioniert's" }}
+        </a>
       </div>
-      <div class="hero__micro-ribbon">
-        <span class="hero__micro-chip"><strong>Immer dabei</strong></span>
-        <span class="hero__micro-chip">Schnelle Erstbehandlung</span>
-        <span class="hero__micro-chip">Ohne Chlorbleiche</span>
-      </div>
-    </div>
 
-    <div class="hero__visual">
+      <ul class="hero__bullets">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <li class="hero__bullet-item" {{ block.shopify_attributes }}>
+              {%- case block.settings.icon -%}
+                {%- when 'shield' -%}
+                  <svg class="hero__bullet-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="m9 11 2 2 4-4"/>
+                  </svg>
+                {%- when 'leaf' -%}
+                  <svg class="hero__bullet-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 0 9.5a7 7 0 0 1-8 8.5z"/>
+                    <path d="M19 2c-2.26 4.33-5.27 7.14-8 10"/>
+                  </svg>
+                {%- when 'box' -%}
+                  <svg class="hero__bullet-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                  </svg>
+                {%- else -%}
+                  <svg class="hero__bullet-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+              {%- endcase -%}
+              <span>{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          <li class="hero__bullet-item">
+            <svg class="hero__bullet-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 11 2 2 4-4"/>
+            </svg>
+            <span>Ohne Bleiche</span>
+          </li>
+          <li class="hero__bullet-item">
+            <svg class="hero__bullet-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 0 9.5a7 7 0 0 1-8 8.5z"/>
+              <path d="M19 2c-2.26 4.33-5.27 7.14-8 10"/>
+            </svg>
+            <span>Sanft zur Haut – ohne aggressive Chemie</span>
+          </li>
+          <li class="hero__bullet-item">
+            <svg class="hero__bullet-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+            <span>Kompakt: 5 g · passt in jede Tasche</span>
+          </li>
+        {%- endif -%}
+      </ul>
+    </article>
+
+    <aside class="hero__visual" aria-label="Produktvisualisierung">
       <div class="hero__glow" aria-hidden="true"></div>
       <div class="hero__spotlight" aria-hidden="true"></div>
+      
+      <!-- Sparkle SVG elements representing the stars from the reference layout -->
+      <svg class="hero__sparkle hero__sparkle--1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+      </svg>
+      <svg class="hero__sparkle hero__sparkle--2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+      </svg>
+      <svg class="hero__sparkle hero__sparkle--3" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+      </svg>
+
       {%- if section.settings.image != blank -%}
         {{ section.settings.image | image_url: width: 1200 | image_tag: alt: 'FleckenXperte TO GO', class: 'hero__image', loading: 'eager' }}
       {%- else -%}
-        <img class="hero__image" src="{{ 'hero-stick.png' | asset_url }}" alt="FleckenXperte Stift" loading="eager">
+        <img class="hero__image" src="{{ 'hero-stick.png' | asset_url }}" alt="FleckenXperte Stift" loading="eager" width="600" height="600">
       {%- endif -%}
+      
       <div class="hero__badge">
-        <strong>Immer dabei</strong>
-        <span>Schnelle Erstbehandlung</span>
+        <div class="hero__badge-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+        </div>
+        <div>
+          <strong>Immer dabei</strong>
+          <span>Schnelle Erstbehandlung</span>
+        </div>
       </div>
-    </div>
+    </aside>
+  </div>
+
+  <div class="container hero__micro-ribbon">
+    <span class="hero__micro-chip"><strong>Immer dabei</strong></span>
+    <span class="hero__micro-chip">Schnelle Erstbehandlung</span>
+    <span class="hero__micro-chip">Ohne Chlorbleiche</span>
   </div>
 </section>
 
@@ -42,18 +128,40 @@
 {
   "name": "Hero",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Fleckenentferner-Stift · für unterwegs" },
-    { "type": "text", "id": "title_line1", "label": "Titel Zeile 1", "default": "Erste Hilfe" },
-    { "type": "text", "id": "title_line2", "label": "Titel Zeile 2 (Gradient)", "default": "bei Flecken." },
-    { "type": "textarea", "id": "lead", "label": "Lead-Text", "default": "Der FleckenXperte TO GO ist dein Fleckenentferner im Stiftformat — so kompakt wie ein Lippenstift und immer griffbereit." },
-    { "type": "text", "id": "cta_primary", "label": "Primärer CTA", "default": "Jetzt sichern" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Fleckenentferner-Stift · für unterwegs & auf Reisen" },
+    { "type": "text", "id": "title_line1", "label": "Titel Zeile 1", "default": "Schnelle Hilfe bei Flecken –" },
+    { "type": "text", "id": "title_line2", "label": "Titel Zeile 2 (Gradient)", "default": "unterwegs und auf Reisen." },
+    { "type": "textarea", "id": "lead", "label": "Lead-Text", "default": "Rotwein beim Geschäftsessen? Kaffee auf der Bluse vor dem Meeting? Mit dem FleckenXperte TO GO hast du schnelle Hilfe immer dabei — so kompakt wie ein Lippenstift, ideal für Handtasche, Auto oder Reisegepäck." },
+    { "type": "text", "id": "cta_primary", "label": "Primärer CTA", "default": "Jetzt bestellen" },
     { "type": "url", "id": "cta_primary_url", "label": "Primärer CTA URL" },
     { "type": "text", "id": "cta_secondary", "label": "Sekundärer CTA", "default": "So funktioniert's" },
     { "type": "url", "id": "cta_secondary_url", "label": "Sekundärer CTA URL" },
     { "type": "image_picker", "id": "image", "label": "Produktbild (Hero)" }
   ],
   "blocks": [
-    { "type": "bullet", "name": "Bullet", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Ohne Bleiche" }] }
+    {
+      "type": "bullet",
+      "name": "Bullet Point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Ohne Bleiche"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Sicherheits-Schild" },
+            { "value": "leaf", "label": "Natur-Blatt" },
+            { "value": "box", "label": "Kompakt-Box" }
+          ],
+          "default": "shield"
+        }
+      ]
+    }
   ],
   "presets": [{ "name": "Hero" }]
 }

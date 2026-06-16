@@ -2,6 +2,7 @@
 (function () {
   'use strict';
 
+  // Mobile menu toggle logic
   var menuToggle = document.querySelector('.site-header__menu-toggle');
   var drawer = document.querySelector('.site-header__drawer');
 
@@ -38,5 +39,44 @@
         if (el) el.textContent = cart.item_count;
       })
       .catch(function () {});
+  });
+
+  // Scroll Animations: Intersection Observer to trigger scroll entries
+  document.addEventListener('DOMContentLoaded', function () {
+    var animatedElements = document.querySelectorAll(
+      '.hero__inner, .benefits__head, .benefit-card, .featured-product__head-section, .featured-product__popular-box, .featured-product__main-card, .steps__head, .step-card, .use-cases__head, .use-case-card, .faq__title, .faq__item, .pdp__grid'
+    );
+
+    // Apply animation-ready class
+    animatedElements.forEach(function (el) {
+      el.classList.add('reveal-element');
+    });
+
+    if ('IntersectionObserver' in window) {
+      var observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -8% 0px', // Trigger slightly before element enters view
+        threshold: 0.05
+      };
+
+      var observer = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-element--visible');
+            // Unobserve once animated in
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      animatedElements.forEach(function (el) {
+        observer.observe(el);
+      });
+    } else {
+      // Fallback for older browsers
+      animatedElements.forEach(function (el) {
+        el.classList.add('reveal-element--visible');
+      });
+    }
   });
 })();

@@ -1,70 +1,287 @@
+{%- assign current = product.selected_or_first_available_variant -%}
+{%- assign has_product = false -%}
+{%- if product != blank and product.handle != blank -%}
+  {%- assign has_product = true -%}
+{%- endif -%}
+
 <section class="pdp container">
-  <div class="pdp__media">
-    {%- if product.featured_media -%}
-      {{ product.featured_media | image_url: width: 1200 | image_tag: alt: product.title, class: 'pdp__image' }}
-    {%- endif -%}
-    {%- if product.images.size > 1 -%}
-      <div class="pdp__thumbs">
-        {%- for image in product.images -%}
-          {{ image | image_url: width: 200 | image_tag: alt: image.alt, class: 'pdp__thumb' }}
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
+  <!-- Back button -->
+  <div class="pdp__back-link">
+    <a href="{{ routes.root_url }}">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Zurück zum Shop
+    </a>
   </div>
 
-  <div class="pdp__info">
-    <h1 class="pdp__title">{{ product.title }}</h1>
-    <p class="pdp__price">
-      {%- assign current = product.selected_or_first_available_variant -%}
-      <span id="pdp-price">{{ current.price | money }}</span>
-      <small>inkl. MwSt. · <a href="/pages/versandbedingungen">zzgl. Versand</a></small>
-      <small>Lieferzeit innerhalb von 1–3 Arbeitstagen</small>
-    </p>
-
-    <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="pdp__form" id="pdp-form">
-      {%- if product.variants.size > 1 -%}
-        <label class="pdp__label" for="pdp-variant">Variante</label>
-        <select name="id" id="pdp-variant" class="pdp__select" data-prices='{
-          {%- for v in product.variants -%}"{{ v.id }}":"{{ v.price | money }}"{% unless forloop.last %},{% endunless %}{%- endfor -%}
-        }'>
-          {%- for v in product.variants -%}
-            <option value="{{ v.id }}" {% if v.id == current.id %}selected{% endif %} {% unless v.available %}disabled{% endunless %}>
-              {{ v.title }} — {{ v.price | money }}
-            </option>
+  <div class="pdp__grid">
+    <!-- Left Column: Gallery -->
+    <div class="pdp__media-gallery">
+      <div class="pdp__media-frame">
+        {%- if has_product and product.featured_media -%}
+          {{ product.featured_media | image_url: width: 1200 | image_tag: alt: product.title, class: 'pdp__featured-image' }}
+        {%- else -%}
+          <img src="{{ 'hero-stick.png' | asset_url }}" alt="FleckenXperte TO GO" class="pdp__featured-image" width="600" height="600">
+        {%- endif -%}
+      </div>
+      
+      {%- if has_product and product.images.size > 1 -%}
+        <div class="pdp__thumbs">
+          {%- for image in product.images -%}
+            <button class="pdp__thumb-btn {% if forloop.first %}is-active{% endif %}" data-image-url="{{ image | image_url: width: 1200 }}">
+              {{ image | image_url: width: 150 | image_tag: alt: image.alt, class: 'pdp__thumb' }}
+            </button>
           {%- endfor -%}
-        </select>
-      {%- else -%}
-        <input type="hidden" name="id" value="{{ current.id }}">
+        </div>
       {%- endif -%}
+    </div>
 
-      <div class="pdp__qty">
-        <label for="pdp-qty">Menge</label>
-        <input type="number" id="pdp-qty" name="quantity" value="1" min="1">
+    <!-- Right Column: Info & Purchase Form -->
+    <div class="pdp__details-col">
+      <h1 class="pdp__title-heading">
+        {%- if has_product -%}
+          {{ product.title }}
+        {%- else -%}
+          FleckenXperte TO GO – Fleckenentferner-Stift (5 g)
+        {%- endif -%}
+      </h1>
+
+      <div class="pdp__price-container">
+        <span class="pdp__price-large" id="pdp-price-display">
+          {%- if has_product -%}
+            {{ current.price | money }}
+          {%- else -%}
+            2,99 €
+          {%- endif -%}
+        </span>
+        <span class="pdp__price-unit" id="pdp-unit-display">
+          {%- if has_product -%}
+            {%- if current.title contains '12' -%}
+              (41,65 € / 100 g)
+            {%- elsif current.title contains '6' -%}
+              (49,97 € / 100 g)
+            {%- else -%}
+              (59,80 € / 100 g)
+            {%- endif -%}
+          {%- else -%}
+            (59,80 € / 100 g)
+          {%- endif -%}
+        </span>
       </div>
 
-      <button type="submit" class="btn btn--brand btn--lg" {% unless current.available %}disabled{% endunless %}>
-        {% if current.available %}In den Warenkorb{% else %}Ausverkauft{% endif %}
-      </button>
-    </form>
+      <p class="pdp__tax-notice">
+        inkl. MwSt. <a href="/pages/versandbedingungen">zzgl. Versand</a> · Lieferzeit innerhalb von 1–3 Arbeitstagen
+      </p>
 
-    <div class="pdp__desc rte">
-      {{ product.description }}
+      {%- if has_product -%}
+        {% form 'product', product, class: 'pdp__purchase-form', id: 'pdp-add-form' %}
+          <input type="hidden" name="id" id="selected-variant-id" value="{{ current.id }}">
+          
+          <div class="pdp__variants-section">
+            <span class="pdp__variants-label">Menge wählen</span>
+            
+            <div class="pdp__variant-cards">
+              {%- for variant in product.variants -%}
+                {%- assign is_selected = false -%}
+                {%- if variant.id == current.id -%}
+                  {%- assign is_selected = true -%}
+                {%- endif -%}
+                
+                {%- assign unit_price = '59,80 € / 100 g' -%}
+                {%- if variant.title contains '12' -%}
+                  {%- assign unit_price = '41,65 € / 100 g' -%}
+                {%- elsif variant.title contains '6' -%}
+                  {%- assign unit_price = '49,97 € / 100 g' -%}
+                {%- endif -%}
+                
+                <button type="button" 
+                        class="pdp__variant-card {% if is_selected %}is-selected{% endif %}" 
+                        data-variant-id="{{ variant.id }}" 
+                        data-price="{{ variant.price | money }}"
+                        data-unit="{{ unit_price }}"
+                        {% unless variant.available %}disabled{% endunless %}>
+                  
+                  <span class="pdp__variant-card-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </span>
+                  
+                  <strong class="pdp__variant-card-title">{{ variant.title }}</strong>
+                  <span class="pdp__variant-card-price">{{ variant.price | money }}</span>
+                  <small class="pdp__variant-card-vat">inkl. MwSt.</small>
+                  <small class="pdp__variant-card-unit">{{ unit_price }}</small>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <div style="margin-top:1.5rem;">
+            <button type="submit" class="btn btn--brand btn--block btn--lg pdp__submit-btn" {% unless current.available %}disabled{% endunless %}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+              <span id="pdp-submit-text">{% if current.available %}In den Warenkorb{% else %}Ausverkauft{% endif %}</span>
+            </button>
+          </div>
+        {% endform %}
+      {%- else -%}
+        <!-- Mock form for default previews -->
+        <div class="pdp__purchase-form">
+          <div class="pdp__variants-section">
+            <span class="pdp__variants-label">Menge wählen</span>
+            
+            <div class="pdp__variant-cards">
+              <button type="button" class="pdp__variant-card is-selected" data-price="2,99 €" data-unit="59,80 € / 100 g">
+                <span class="pdp__variant-card-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <strong class="pdp__variant-card-title">1 Stück</strong>
+                <span class="pdp__variant-card-price">2,99 €</span>
+                <small class="pdp__variant-card-vat">inkl. MwSt.</small>
+                <small class="pdp__variant-card-unit">59,80 € / 100 g</small>
+              </button>
+
+              <button type="button" class="pdp__variant-card" data-price="14,99 €" data-unit="49,97 € / 100 g">
+                <span class="pdp__variant-card-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <strong class="pdp__variant-card-title">6er-Pack</strong>
+                <span class="pdp__variant-card-price">14,99 €</span>
+                <small class="pdp__variant-card-vat">inkl. MwSt.</small>
+                <small class="pdp__variant-card-unit">49,97 € / 100 g</small>
+              </button>
+
+              <button type="button" class="pdp__variant-card" data-price="24,99 €" data-unit="41,65 € / 100 g">
+                <span class="pdp__variant-card-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <strong class="pdp__variant-card-title">12er-Pack</strong>
+                <span class="pdp__variant-card-price">24,99 €</span>
+                <small class="pdp__variant-card-vat">inkl. MwSt.</small>
+                <small class="pdp__variant-card-unit">41,65 € / 100 g</small>
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-top:1.5rem;">
+            <a href="#" class="btn btn--brand btn--block btn--lg pdp__submit-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+              <span>In den Warenkorb</span>
+            </a>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Inline badges below add to cart -->
+      <div class="pdp__trust-lines">
+        <div class="trust-line">
+          <svg class="trust-line__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="2" ry="2"/>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+          <span>Versand 3,99 € · ab 50 € versandkostenfrei (Deutschland)</span>
+        </div>
+        <div class="trust-line">
+          <svg class="trust-line__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 11 2 2 4-4"/>
+          </svg>
+          <span>Sichere Bezahlung über Shopify & PayPal</span>
+        </div>
+      </div>
+
+      <!-- Description content -->
+      <div class="pdp__description-content">
+        {%- if has_product and product.description != blank -%}
+          <div class="rte">{{ product.description }}</div>
+        {%- else -%}
+          <div class="rte">
+            <p><strong>Der Fleckenentferner im Stiftformat – immer dabei.</strong> FleckenXperte TO GO entfernt frische Flecken in Sekunden – Kaffee, Tee, Soße, Lippenstift, Kugelschreiber, Öl & mehr. Klein wie ein Lippenstift, ideal für Handtasche, Auto, Büro oder Reise.</p>
+            <p><strong>Inhalt:</strong> 5 g (1 Stift) · Gel-Konsistenz, faserschonend</p>
+            
+            <p style="margin-top:1.5rem; margin-bottom:.5rem;"><strong>Anwendung:</strong></p>
+            <ol style="padding-left:1.2rem; margin:0;">
+              <li>Verschmutzte Stelle leicht anfeuchten.</li>
+              <li>Eine kleine Menge des Produkts direkt auf den Fleck auftragen.</li>
+              <li>Mit einem Tuch oder dem Finger vorsichtig einreiben.</li>
+              <li>Mit Wasser ausspülen oder mit einem feuchten Tuch abnehmen.</li>
+            </ol>
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
 
+<!-- Variant Selection Script -->
 <script>
   (function(){
-    var sel = document.getElementById('pdp-variant');
-    if(!sel) return;
-    sel.addEventListener('change', function(){
-      var prices = JSON.parse(sel.dataset.prices);
-      var el = document.getElementById('pdp-price');
-      if(el && prices[sel.value]) el.textContent = prices[sel.value];
-    });
+    var cards = document.querySelectorAll('.pdp__variant-card');
+    var input = document.getElementById('selected-variant-id');
+    var displayPrice = document.getElementById('pdp-price-display');
+    var displayUnit = document.getElementById('pdp-unit-display');
+    
+    if (cards.length) {
+      cards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          // Remove selected state from all
+          cards.forEach(function(c) { c.classList.remove('is-selected'); });
+          
+          // Add selected state to this card
+          card.classList.add('is-selected');
+          
+          // Update hidden input ID
+          var id = card.dataset.variantId;
+          if (input && id) input.value = id;
+          
+          // Update display price
+          if (displayPrice && card.dataset.price) {
+            displayPrice.textContent = card.dataset.price;
+          }
+          
+          // Update display unit
+          if (displayUnit && card.dataset.unit) {
+            displayUnit.textContent = '(' + card.dataset.unit + ')';
+          }
+        });
+      });
+    }
+
+    // Thumbnail swap handler
+    var thumbs = document.querySelectorAll('.pdp__thumb-btn');
+    var mainImage = document.querySelector('.pdp__featured-image');
+    if (thumbs.length && mainImage) {
+      thumbs.forEach(function(thumb) {
+        thumb.addEventListener('click', function() {
+          thumbs.forEach(function(t) { t.classList.remove('is-active'); });
+          thumb.classList.add('is-active');
+          var url = thumb.dataset.imageUrl;
+          if (url) mainImage.src = url;
+        });
+      });
+    }
   })();
 </script>
 
 {% schema %}
-{ "name": "Produkt", "settings": [] }
+{
+  "name": "Produkt",
+  "settings": []
+}
 {% endschema %}
